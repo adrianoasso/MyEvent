@@ -1,5 +1,9 @@
 package com.myevent;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +13,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.myevent.event.NewEvent;
+import com.myevent.questions.MainQuestions;
+
+import static java.security.AccessController.getContext;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,13 +26,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final Intent mainQuestionsIntent = new Intent(this, MainQuestions.class);
+        final Intent newEventIntent = new Intent(this, NewEvent.class);
+        AccountManager accountManager = (AccountManager)getSystemService(Context.ACCOUNT_SERVICE);
+        final String username;
+        Account[] list = AccountManager.get(this).getAccountsByType("com.google");
+        username = "NULL";
+
+
+        System.out.println("list: " + list.length);
 
         FloatingActionButton newEvent = (FloatingActionButton) findViewById(R.id.newEvent);
         newEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //newEventIntent.putExtra("username", username);
+                startActivity(newEventIntent);
             }
         });
 
@@ -31,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
         question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                mainQuestionsIntent.putExtra("username", username);
+                startActivity(mainQuestionsIntent);
             }
         });
     }

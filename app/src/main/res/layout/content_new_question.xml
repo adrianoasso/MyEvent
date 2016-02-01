@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.myevent.questions.NewQuestion"
+    tools:showIn="@layout/activity_new_question">
+
+    <EditText
+        android:id="@+id/titoloSondaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLength="30"
+        android:text="Quale evento vuoi proporre?"
+        android:textColor="@color/colorTextGrey"
+        />
+
+    <EditText
+        android:id="@+id/dataSondaggio"
+        android:layout_below="@id/titoloSondaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Quando?"
+        android:maxLength="10"
+        android:textColor="@color/colorTextGrey"
+        android:editable="false"
+        />
+
+    <EditText
+        android:id="@+id/descrSondaggio"
+        android:layout_below="@id/dataSondaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Dimmi di più..."
+        android:maxLength="200"
+        android:textColor="@color/colorTextGrey"
+         />
+
+</RelativeLayout>
