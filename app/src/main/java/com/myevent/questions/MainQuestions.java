@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-import com.myevent.config.HttpGetTask;
 
 import com.myevent.R;
+import com.myevent.config.HttpGetTask;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MainQuestions extends AppCompatActivity {
 
@@ -26,8 +29,6 @@ public class MainQuestions extends AppCompatActivity {
         String username=mainActivityIntent.getStringExtra("username");
         final Intent newQuestionIntent = new Intent(this, NewQuestion.class);
 
-        TextView textView = (TextView) findViewById(R.id.username);
-        textView.setText(username);
 
         FloatingActionButton newQuestion = (FloatingActionButton) findViewById(R.id.newQuestion);
         newQuestion.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +38,24 @@ public class MainQuestions extends AppCompatActivity {
             }
         });
 
-        new HttpGetTask().execute();
+        try {
+            ArrayList<String> results = (ArrayList<String>) new HttpGetTask().execute().get();
+            TextView textView = (TextView) findViewById(R.id.username);
+            String stringone = "";
+            int i = 0;
+            while(results.size() != i){
+                stringone = stringone + results.get(i) + "\n";
+                i++;
+            }
+            textView.setText(stringone);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 
