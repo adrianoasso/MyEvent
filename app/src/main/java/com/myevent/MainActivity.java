@@ -65,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
             ImageButton[] buttonEvent = new ImageButton[results.size()];
             TextView[] textEvent = new TextView[results.size()];
             RelativeLayout mainView = (RelativeLayout) findViewById(R.id.mainLayout);
-            //RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            //RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            //RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(400, 400);
-            //RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(400, 400);
-            //TableRow[] eventRow = new TableRow[results.size()];
-
             String stringone = "";
 
             for(int c = 0; c < results.size(); c++){
@@ -79,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("ButtonId: " + c);
                 buttonEvent[c] = new ImageButton(this);
                 buttonEvent[c].setImageResource(R.drawable.ic_launcher);
-                //buttonEvent[c].setLayoutParams(lp);
                 //buttonEvent.setOnClickListener(mGreenBallOnClickListener);
 
                 buttonEvent[c].setTag(i);
@@ -91,10 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 textEvent[c].setText(stringone);
                 textEvent[c].setTag(i+1000);
                 textEvent[c].setId(i + 1000);
-
-               // eventRow[i] = new TableRow(this);
-                //eventRow[i].addView(buttonEvent[i]);
-                //eventRow[i].addView(textEvent[i]);
 
                 if(c % 2 == 0 ) {
                     if(c == 0) {
@@ -113,22 +102,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-               /* if(c == 2 ) {
-                    buttonEvent[c].setBackgroundColor(Color.YELLOW);
-                    layoutParams[c].addRule(RelativeLayout.BELOW, buttonEvent[c - 2].getId());
-                }
-                if(c % 2 == 1 ) {
-                    buttonEvent[c].setBackgroundColor(Color.MAGENTA);
-                    layoutParams[c].addRule(RelativeLayout.RIGHT_OF, buttonEvent[c - 1].getId());
-                }*/
-
                 buttonEvent[c].setLayoutParams(layoutParams[c]);
                 textEvent[c].setLayoutParams(layoutParams[c]);
                 mainView.addView(buttonEvent[c], layoutParams[c]);
                 mainView.addView(textEvent[c], layoutParams[c]);
-
-
-
             }
 
         } catch (InterruptedException e) {
