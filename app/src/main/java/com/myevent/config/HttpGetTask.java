@@ -29,7 +29,7 @@ public class HttpGetTask extends AsyncTask {
 
         //http post
         try{
-            URLConnection connection = new URL("http://myevent.16mb.com/viewusers.php").openConnection();
+            URLConnection connection = new URL("http://myevent.16mb.com/events.php").openConnection();
 
             InputStream response = connection.getInputStream();
             String result = getStringFromInputStream(response);

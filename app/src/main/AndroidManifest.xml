@@ -31,6 +31,10 @@
             android:name=".questions.NewQuestion"
             android:label="@string/title_activity_new_question"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".event.NewEvent"
+            android:label="@string/title_activity_new_event"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
