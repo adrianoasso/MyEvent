@@ -1,4 +1,4 @@
-package com.myevent.config;
+package com.myevent.dao;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -17,7 +17,7 @@ public class HttpGetTask extends AsyncTask {
 
     @Override
     protected ArrayList doInBackground(Object[] params) {
-        ArrayList<String> results = new ArrayList<>();
+        ArrayList<Events> results = new ArrayList<>();
         //http post
         try{
             URLConnection connection = new URL("http://myevent.16mb.com/events.php").openConnection();

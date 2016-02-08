@@ -16,7 +16,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.myevent.config.HttpGetTask;
+import com.myevent.dao.Events;
+import com.myevent.dao.HttpGetTask;
 import com.myevent.event.NewEvent;
 import com.myevent.questions.MainQuestions;
 
@@ -60,51 +61,70 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
-            ArrayList<String> results = (ArrayList<String>) new HttpGetTask().execute().get();
+            ArrayList<Events> results = (ArrayList<Events>) new HttpGetTask().execute().get();
             RelativeLayout.LayoutParams[] layoutParams = new RelativeLayout.LayoutParams[results.size()];
+            RelativeLayout.LayoutParams[] layoutParamsTransparent = new RelativeLayout.LayoutParams[results.size()];
+            RelativeLayout.LayoutParams[] layoutParamsText = new RelativeLayout.LayoutParams[results.size()];
             ImageButton[] buttonEvent = new ImageButton[results.size()];
+            ImageButton[] buttonEventTransparent = new ImageButton[results.size()];
             TextView[] textEvent = new TextView[results.size()];
             RelativeLayout mainView = (RelativeLayout) findViewById(R.id.mainLayout);
-            String stringone = "";
+            //String stringone = "";
 
             for(int c = 0; c < results.size(); c++){
                 int i = 1000 + c;
                 layoutParams[c] = new RelativeLayout.LayoutParams(500,500);
+                layoutParamsTransparent[c] = new RelativeLayout.LayoutParams(500,100);
+                layoutParamsText[c] = new RelativeLayout.LayoutParams(500,500);
                 System.out.println("ButtonId: " + c);
                 buttonEvent[c] = new ImageButton(this);
+                buttonEventTransparent[c] = new ImageButton(this);
                 buttonEvent[c].setImageResource(R.drawable.ic_launcher);
+                buttonEventTransparent[c].setImageResource(R.drawable.ic_launcher);
                 //buttonEvent.setOnClickListener(mGreenBallOnClickListener);
 
                 buttonEvent[c].setTag(i);
                 buttonEvent[c].setId(i);
 
 
-                stringone = results.get(c);
+
                 textEvent[c] = new TextView(this);
-                textEvent[c].setText(stringone);
-                textEvent[c].setTag(i+1000);
+                textEvent[c].setText(results.get(c).getNome());
+                textEvent[c].setTag(i + 1000);
                 textEvent[c].setId(i + 1000);
 
                 if(c % 2 == 0 ) {
                     if(c == 0) {
                         buttonEvent[c].setBackgroundColor(Color.RED);
+                       // buttonEventTransparent[c].setBackgroundColor(Color.TRANSPARENT);
+                       // buttonEventTransparent[c].getBackground().setAlpha(40);
                         layoutParams[c].addRule(RelativeLayout.ALIGN_PARENT_START);
+                      //  layoutParamsTransparent[c].addRule(RelativeLayout.ALIGN_PARENT_START);
+                      //  layoutParamsText[c].addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,buttonEvent[c].getId());
+
                     } else {
                         buttonEvent[c].setBackgroundColor(Color.YELLOW);
                         layoutParams[c].addRule(RelativeLayout.BELOW, buttonEvent[c - 2].getId());
+                      //  layoutParamsText[c].addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,buttonEvent[c].getId());
                     }
                 }
                 if(c % 2 == 1 ) {
-                    buttonEvent[c].setBackgroundColor(Color.MAGENTA);
+                    buttonEvent[c].setBackgroundColor(Color.GRAY);
+                   // buttonEventTransparent[c].setBackgroundColor(Color.TRANSPARENT);
                     layoutParams[c].addRule(RelativeLayout.RIGHT_OF, buttonEvent[c - 1].getId());
+                  //  layoutParamsTransparent[c].addRule(RelativeLayout.RIGHT_OF, buttonEvent[c - 1].getId());
+                  //  layoutParamsText[c].addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,buttonEvent[c].getId());
                     if(c != 1) {
                         layoutParams[c].addRule(RelativeLayout.BELOW, buttonEvent[c - 2].getId());
+                     //   layoutParamsText[c].addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,buttonEvent[c].getId());
                     }
                 }
 
                 buttonEvent[c].setLayoutParams(layoutParams[c]);
+               // buttonEventTransparent[c].setLayoutParams(layoutParamsTransparent[c]);
                 textEvent[c].setLayoutParams(layoutParams[c]);
                 mainView.addView(buttonEvent[c], layoutParams[c]);
+               // mainView.addView(buttonEventTransparent[c], layoutParamsTransparent[c]);
                 mainView.addView(textEvent[c], layoutParams[c]);
             }
 

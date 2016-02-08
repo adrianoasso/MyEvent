@@ -1,4 +1,4 @@
-package com.myevent.config;
+package com.myevent.dao;
 
 import android.util.Log;
 
@@ -18,12 +18,14 @@ import java.util.ArrayList;
 public class GetDataDB {
 
 
-    protected static ArrayList<String> getStringFromInputStream(InputStream is) {
+    protected static ArrayList<Events> getStringFromInputStream(InputStream is) {
 
         String stringaFinale = "";
-        ArrayList<String> results = new ArrayList<>();
+        //ArrayList<String> results = new ArrayList<>();
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
+        ArrayList<Events> events = new ArrayList<Events>();
+        Events event;
 
         String line;
         try {
@@ -51,12 +53,23 @@ public class GetDataDB {
                 JSONObject json_data = jArray.getJSONObject(i);
 
                 Log.i("TEST", "IdEvents: " + json_data.getString("idEvents") +
-                                ", Nome: " + json_data.getString("Nome")
-                );
+                        ", Nome: " + json_data.getString("Nome"));
 
-                stringaFinale = json_data.getString("idEvents") + " " + json_data.getString("Nome") + "\n\n";
-                results.add(stringaFinale);
+                event = new Events();
 
+                event.setIdEvents(json_data.getInt("idEvents"));
+                event.setNome(json_data.getString("Nome"));
+                event.setData(json_data.getString("Data"));
+                event.setDescrizione(json_data.getString("Descrizione"));
+                event.setFlagEsist(json_data.getString("FlagEsist"));
+                event.setFlagPassato(json_data.getString("FlagPassato"));
+                event.setDataUltMod(json_data.getString("DataUltMod"));
+                event.setUtenteUltMod(json_data.getString("UtenteUltMod"));
+
+                //stringaFinale = json_data.getString("idEvents") + " " + json_data.getString("Nome") + "\n\n";
+                //results.add(stringaFinale);
+                events.add(event);
+                System.out.println("Array eventi: " + events.get(i).getNome());
             }
         }
         catch(JSONException e){
@@ -64,7 +77,7 @@ public class GetDataDB {
         }
 
 
-        return results;
+        return events;
 
     }
 
