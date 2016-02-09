@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class HttpGetTask extends AsyncTask {
 
+    private static String HOST = "http://myevent.16mb.com/";
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
@@ -20,10 +21,18 @@ public class HttpGetTask extends AsyncTask {
         ArrayList<Events> results = new ArrayList<>();
         //http post
         try{
-            URLConnection connection = new URL("http://myevent.16mb.com/events.php").openConnection();
+            if (params[0] == "ESTRAI_EVENTI") {
+                URLConnection connection = new URL(HOST + "events.php").openConnection();
 
-            InputStream response = connection.getInputStream();
-            results = GetDataDB.getStringFromInputStream(response);
+                InputStream response = connection.getInputStream();
+                results = GetDataDB.getStringFromInputStream(response);
+            } else if (params[0] == "INS_EVENTO") {
+                URLConnection connection = new URL(HOST + "insevent.php").openConnection();
+                connection.setRequestProperty("nome", params[1].toString());
+                connection.setRequestProperty("data", params[2].toString());
+                connection.setRequestProperty("descrizione", params[3].toString());
+            }
+
 
         }catch(Exception e){
             Log.e("TEST", "Errore nella connessione http " + e.toString());

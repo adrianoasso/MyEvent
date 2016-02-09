@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.myevent.dao.Events;
 import com.myevent.dao.HttpGetTask;
+import com.myevent.event.DetailEvent;
 import com.myevent.event.NewEvent;
 import com.myevent.questions.MainQuestions;
 
@@ -34,19 +35,16 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final Intent mainQuestionsIntent = new Intent(this, MainQuestions.class);
         final Intent newEventIntent = new Intent(this, NewEvent.class);
+        final Intent detailEventIntent = new Intent(this, DetailEvent.class);
         AccountManager accountManager = (AccountManager)getSystemService(Context.ACCOUNT_SERVICE);
         final String username;
         Account[] list = AccountManager.get(this).getAccountsByType("com.google");
         username = "NULL";
 
-
-        System.out.println("list: " + list.length);
-
         FloatingActionButton newEvent = (FloatingActionButton) findViewById(R.id.newEvent);
         newEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //newEventIntent.putExtra("username", username);
                 startActivity(newEventIntent);
             }
         });
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
-            ArrayList<Events> results = (ArrayList<Events>) new HttpGetTask().execute().get();
+            final ArrayList<Events> results = (ArrayList<Events>) new HttpGetTask().execute("ESTRAI_EVENTI").get();
             RelativeLayout.LayoutParams[] layoutParams = new RelativeLayout.LayoutParams[results.size()];
             RelativeLayout.LayoutParams[] layoutParamsTransparent = new RelativeLayout.LayoutParams[results.size()];
             RelativeLayout.LayoutParams[] layoutParamsText = new RelativeLayout.LayoutParams[results.size()];
@@ -74,14 +72,23 @@ public class MainActivity extends AppCompatActivity {
             for(int c = 0; c < results.size(); c++){
                 int i = 1000 + c;
                 layoutParams[c] = new RelativeLayout.LayoutParams(500,500);
-                layoutParamsTransparent[c] = new RelativeLayout.LayoutParams(500,100);
+                //layoutParamsTransparent[c] = new RelativeLayout.LayoutParams(500,100);
                 layoutParamsText[c] = new RelativeLayout.LayoutParams(500,500);
                 System.out.println("ButtonId: " + c);
                 buttonEvent[c] = new ImageButton(this);
                 buttonEventTransparent[c] = new ImageButton(this);
                 buttonEvent[c].setImageResource(R.drawable.ic_launcher);
-                buttonEventTransparent[c].setImageResource(R.drawable.ic_launcher);
-                //buttonEvent.setOnClickListener(mGreenBallOnClickListener);
+                //buttonEventTransparent[c].setImageResource(R.drawable.ic_launcher);
+                final int finalC = c;
+                buttonEvent[c].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        detailEventIntent.putExtra("nome", results.get(finalC).getNome());
+                        detailEventIntent.putExtra("data", results.get(finalC).getData());
+                        detailEventIntent.putExtra("descrizione", results.get(finalC).getDescrizione());
+                        startActivity(detailEventIntent);
+                    }
+                });
 
                 buttonEvent[c].setTag(i);
                 buttonEvent[c].setId(i);
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 textEvent[c] = new TextView(this);
-                textEvent[c].setText(results.get(c).getNome());
+                textEvent[c].setText(results.get(c).getNome() + "\n" + results.get(c).getData());
                 textEvent[c].setTag(i + 1000);
                 textEvent[c].setId(i + 1000);
 
