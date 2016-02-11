@@ -18,16 +18,13 @@ import java.util.ArrayList;
 public class GetDataDB {
 
 
-    protected static ArrayList<Events> getStringFromInputStream(InputStream is) {
+    protected static String getStringFromInputStream(InputStream is) {
 
         String stringaFinale = "";
-        //ArrayList<String> results = new ArrayList<>();
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
-        ArrayList<Events> events = new ArrayList<Events>();
-        Events event;
-
         String line;
+
         try {
 
             br = new BufferedReader(new InputStreamReader(is));
@@ -45,40 +42,38 @@ public class GetDataDB {
                     e.printStackTrace();
                 }
             }
+            return sb.toString();
         }
+    }
 
-        try{
-            JSONArray jArray = new JSONArray(sb.toString());
-            for(int i=0;i<jArray.length();i++){
-                JSONObject json_data = jArray.getJSONObject(i);
+    protected static ArrayList<Events> getJSONFromBuffer(String buffer){
+        ArrayList<Events> events = new ArrayList<Events>();
+        Events event;
+            try {
+                JSONArray jArray = new JSONArray(buffer);
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    event = new Events();
 
-                Log.i("TEST", "IdEvents: " + json_data.getString("idEvents") +
-                        ", Nome: " + json_data.getString("Nome"));
+                    event.setIdEvents(json_data.getInt("idEvents"));
+                    event.setNome(json_data.getString("Nome"));
+                    event.setData(json_data.getString("Data"));
+                    event.setDescrizione(json_data.getString("Descrizione"));
+                    event.setFlagEsist(json_data.getString("FlagEsist"));
+                    event.setFlagPassato(json_data.getString("FlagPassato"));
+                    event.setDataUltMod(json_data.getString("DataUltMod"));
+                    event.setUtenteUltMod(json_data.getString("UtenteUltMod"));
 
-                event = new Events();
-
-                event.setIdEvents(json_data.getInt("idEvents"));
-                event.setNome(json_data.getString("Nome"));
-                event.setData(json_data.getString("Data"));
-                event.setDescrizione(json_data.getString("Descrizione"));
-                event.setFlagEsist(json_data.getString("FlagEsist"));
-                event.setFlagPassato(json_data.getString("FlagPassato"));
-                event.setDataUltMod(json_data.getString("DataUltMod"));
-                event.setUtenteUltMod(json_data.getString("UtenteUltMod"));
-
-                //stringaFinale = json_data.getString("idEvents") + " " + json_data.getString("Nome") + "\n\n";
-                //results.add(stringaFinale);
-                events.add(event);
-                System.out.println("Array eventi: " + events.get(i).getNome());
+                    events.add(event);
+                }
+            } catch (JSONException e) {
+                Log.e("log_tag", "Error parsing data " + e.toString());
             }
-        }
-        catch(JSONException e){
-            Log.e("log_tag", "Error parsing data "+e.toString());
-        }
 
 
-        return events;
+            return events;
+        }
 
     }
 
-        }
+

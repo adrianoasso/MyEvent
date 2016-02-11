@@ -12,19 +12,19 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
     <TextView
-        android:id="@+id/nomeEvento"
+        android:id="@+id/nomeEventoDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"/>
 
     <TextView
-        android:id="@+id/dataEvento"
+        android:id="@+id/dataEventoDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"/>
 
     <TextView
-        android:id="@+id/descrEvento"
+        android:id="@+id/descrEventoDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"/>

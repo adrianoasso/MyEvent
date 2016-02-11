@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:maxLength="30"
-        android:text="Cosa vuoi organizzare?"
-        android:textColor="@color/colorTextGrey"
+        android:hint="Cosa vuoi organizzare?"
+        android:textColor="@color/colorTextBlack"
         />
 
     <EditText
@@ -27,11 +27,9 @@
         android:layout_below="@id/titoloEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="Quando?"
+        android:hint="Quando?"
         android:maxLength="10"
-        android:textColor="@color/colorTextGrey"
-        android:editable="false"
+        android:textColor="@color/colorTextBlack"
         />
 
     <EditText
@@ -39,10 +37,9 @@
         android:layout_below="@id/dataEvento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="Dimmi di più..."
+        android:hint="Dimmi di più..."
         android:maxLength="200"
-        android:textColor="@color/colorTextGrey"
+        android:textColor="@color/colorTextBlack"
         />
 
 </RelativeLayout>

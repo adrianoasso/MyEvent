@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 layoutParams[c] = new RelativeLayout.LayoutParams(500,500);
                 //layoutParamsTransparent[c] = new RelativeLayout.LayoutParams(500,100);
                 layoutParamsText[c] = new RelativeLayout.LayoutParams(500,500);
-                System.out.println("ButtonId: " + c);
+
                 buttonEvent[c] = new ImageButton(this);
                 buttonEventTransparent[c] = new ImageButton(this);
                 buttonEvent[c].setImageResource(R.drawable.ic_launcher);
